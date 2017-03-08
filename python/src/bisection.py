@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+import sys
 from numpy import *
 
 def calculate(function, r, p, res):
@@ -25,9 +27,15 @@ def calculate(function, r, p, res):
 def main():
     print("Warning: 'Function' parameter is dangerous: the string is just eval()'d")
     input_str = input("Function, range, passes, optional: resolution (0 to disable):")
-    fn, rn, p, res = str.split(input_str, ',')
+    try:
+        fn, rn, p, res = str.split(input_str, ',')
+    except ValueError:
+        print("Not enough/too many parameters, expected 4")
+        sys.exit(-42)
     calculate(fn, rn, p, res)
-    quit()
+    if sys.platform == 'win32':
+        input("Press 'Return' to exit")
+    sys.exit(0)
 
 if __name__ == '__main__':
     main()
